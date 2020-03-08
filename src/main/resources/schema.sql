@@ -15,13 +15,16 @@ Create table if not exists blog
     about        text,
     published_at timestamp
 );
+Drop type if exists post_status_enum;
+Create type post_status_enum as ENUM ('ACTIVE', 'NOT_ACTIVE');
 create table if not exists post
 (
     id      serial primary key not null,
     blog_id int,
     title   varchar(150),
     content text,
-    "user"  int
+    "user"  int,
+    postStatus post_status_enum default 'ACTIVE'
 );
 create table if not exists comment
 (
