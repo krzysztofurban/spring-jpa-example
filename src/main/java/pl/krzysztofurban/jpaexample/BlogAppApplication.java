@@ -1,4 +1,4 @@
-package com.example.blogappjpach3;
+package pl.krzysztofurban.jpaexample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
