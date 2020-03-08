@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,10 +23,8 @@ public class Post {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
   private String title;
   private String content;
-
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
   @JoinColumn(name = "blog_id")
   private Blog blog;
@@ -34,4 +33,13 @@ public class Post {
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
   @JoinColumn(name = "author_id")
   private User user;
+
+  @JsonIgnore
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+  @JoinTable(name = "post_files", joinColumns = {
+      @JoinColumn(name = "post_id", referencedColumnName = "id")
+  }, inverseJoinColumns = {
+      @JoinColumn(name = "file_id", referencedColumnName = "id")
+  })
+  private Set<File> files;
 }

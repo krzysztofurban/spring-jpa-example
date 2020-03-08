@@ -22,6 +22,6 @@ public class BlogTestBase {
   PostRepository postRepository;
   @Autowired
   BlogRepository blogRepository;
-//  @Autowired
-//  FileRepository fileRepository;
+  @Autowired
+  FileRepository fileRepository;
 }
