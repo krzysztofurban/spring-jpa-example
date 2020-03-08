@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /blog
+spring:
+  application:
+    name: blog-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+      jdbc.lob.non_contexual_creation: true
+    generate-ddl: true
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/blogs
+
+logging:
+  file:
+    name: logs/blogging-service.log
+  level:
+    org.hibernate.SQL: ERROR
+    org.springframework.data: DEBUG
