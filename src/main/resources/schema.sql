@@ -5,7 +5,8 @@ drop table if exists comment cascade;
 drop table if exists comment_like cascade;
 drop table if exists file cascade;
 drop table if exists post_files cascade;
-drop table if exists "user" cascade; -- since user is a keyword in postgresql, double quotes are used here
+drop table if exists "user" cascade;
+-- since user is a keyword in postgresql, double quotes are used here
 -- DROP statements end here
 Create table if not exists blog
 (
@@ -19,11 +20,11 @@ Drop type if exists post_status_enum;
 Create type post_status_enum as ENUM ('ACTIVE', 'NOT_ACTIVE');
 create table if not exists post
 (
-    id      serial primary key not null,
-    blog_id int,
-    title   varchar(150),
-    content text,
-    "user"  int,
+    id         serial primary key not null,
+    blog_id    int,
+    title      varchar(150),
+    content    text,
+    "user"     int,
     postStatus post_status_enum default 'ACTIVE'
 );
 create table if not exists comment

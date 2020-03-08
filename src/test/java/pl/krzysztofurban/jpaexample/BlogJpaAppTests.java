@@ -18,12 +18,12 @@ import java.util.Set;
 @ActiveProfiles("test")
 @Slf4j
 public class BlogJpaAppTests extends BlogTestBase {
-  private boolean generateData = true;
+  private final boolean generateData = true;
 
   @PostConstruct
   public void init() {
     log.info("Checking if already initialized");
-    if (dataGenerator.getInitialized().get() == false && generateData) {
+    if (!dataGenerator.getInitialized().get() && generateData) {
       dataGenerator.generateSampleData();
     }
   }
@@ -35,13 +35,12 @@ public class BlogJpaAppTests extends BlogTestBase {
     log.info("Deleted user: {}", "Akira");
     userCRUDService.deleteUser("Akira");
     log.info("Printing all users");
-    userRepository.findAll().stream().forEach(user -> log.info("User {}, {}",
+    userRepository.findAll().forEach(user -> log.info("User {}, {}",
         user.getId(), user.getUsername()));
   }
 
   @Test
   @Transactional
-  @Commit
   public void testManyToManyWithPostAndFiles() {
     Post post = postRepository.findAll().get(0);
     File file = new File();
@@ -67,14 +66,9 @@ public class BlogJpaAppTests extends BlogTestBase {
     List<File> allFiles = fileRepository.findAll();
     allFiles.forEach(f -> {
       Set<Post> posts = f.getPosts();
-      posts.forEach(p -> {
-        log.info("Post: {} attached with file: {}", p.getTitle(), f.getName());
-      });
+      posts.forEach(p -> log.info("Post: {} attached with file: {}", p.getTitle(), f.getName()));
     });
 
-    post.getFiles().forEach(f -> {
-      log.info("File: {} attached to Post: {}", f.getName(), post.getTitle());
-    });
-
+    post.getFiles().forEach(f -> log.info("File: {} attached to Post: {}", f.getName(), post.getTitle()));
   }
 }
